@@ -4,8 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
-#include <random>
-#define GNUPLOT_NAME "C:\\gnuplot\\bin\\gnuplot -persist"
+
 
 using namespace std;
 
@@ -327,18 +326,15 @@ Matrix inverse(const Matrix& m){
 }
 
 int main() {
-    FILE* pipe = _popen(GNUPLOT_NAME, "w");
     cout << fixed << setprecision(4);
     int m, n;
-    m = 5;
+    cin >> m;
     vector <double> mas(m);
     ColumnVector b(m);
     for(int i = 0; i < m; ++i){
-        mas[i] = rand() % 50;
-        b.mas[i] = rand() % 50;
-        cout << mas[i] << ' ' << b.mas[i] << '\n';
+        cin >> mas[i] >> b.mas[i];
     }
-    n = 3;
+    cin >> n;
     Matrix A(m, n + 1);
     for(int i = 0; i < m; ++i){
         for(int j = 0; j <= n; ++j){
@@ -351,12 +347,5 @@ int main() {
     ColumnVector ATbyB = AT * b;
     ColumnVector x = ATbyA_inverse * ATbyB;
     cout << "A:\n" << A << "A_T*A:\n" << ATbyA << "(A_T*A)^-1:\n" << ATbyA_inverse << "A_T*b:\n" << ATbyB << "x~:\n" << x;
-    fprintf(pipe, "plot [0 : 50] [0 : 50] %lf*x**3 + %lf*x**2 + %lf*x**1 + %lf*x**0 , '-' using 1:2 with points\n", x.mas[3], x.mas[2], x.mas[1], x.mas[0]);
-    for(int i = 0; i < m; ++i){
-        fprintf(pipe, "%f\t%f\n", mas[i], b.mas[i]);
-    }
-    fprintf(pipe, "e\n");
-    fflush(pipe);
-    _pclose(pipe);
     return 0;
 }
